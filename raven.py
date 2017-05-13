@@ -2,6 +2,8 @@
 
 import discord
 import asyncio
+import requests
+from bs4 import BeautifulSoup
 from discord.ext import commands
 
 #needed imports
@@ -39,7 +41,14 @@ async def hi(ctx):
 	await bot.say("{0} {1}".format(random.choice(['Hello',"Hi"]),ctx.message.author.name))
 	return
 
-
+@bot.command(pass_context=True,description=" Search for a video on YouTube ")
+async def youtube(ctx):
+	r = requests.get("https://www.youtube.com/results?search_query={0}".format(ctx.message.content.replace("r.youtube ", "")))
+	soup = BeautifulSoup(r.text, "html.parser")
+	res = soup.select("a.yt-uix-tile-link")[0]
+	link = re.search(r"href\S+", str(res))[0][6:-1]
+	await bot.say(":video_camera: | https://www.youtube.com{0}".format(link))
+	return
 
 #member commands
 

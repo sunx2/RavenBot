@@ -2,14 +2,14 @@
 
 import discord
 import asyncio
-import re
-import requests
-from bs4 import BeautifulSoup
 from discord.ext import commands
 
 #needed imports
 import os,sys,ast
 import random
+# scripts import
+import profile as prof
+
 
 #server imports
 
@@ -42,16 +42,33 @@ async def hi(ctx):
 	await bot.say("{0} {1}".format(random.choice(['Hello',"Hi"]),ctx.message.author.name))
 	return
 
-@bot.command(pass_context=True,description=" Search for a video on YouTube ")
-async def youtube(ctx):
-	r = requests.get("https://www.youtube.com/results?search_query={0}".format(ctx.message.content.replace("r.youtube ", "")))
-	soup = BeautifulSoup(r.text, "html.parser")
-	res = soup.select("a.yt-uix-tile-link")[0]
-	link = re.search(r"href\S+", str(res))[0][6:-1]
-	await bot.say(":video_camera: | https://www.youtube.com{0}".format(link))
-	return
+
 
 #member commands
+@bot.command(pass_context=True,description=" Eggs , completed")
+async def eggs(ctx):
+	if len(ctx.message.mentions) == 0:
+		eggs = prof.Profile(ctx.message.author.id).have_eggs()
+		await bot.say(":egg: | You have {0} eggs!".format(eggs))
+	else:
+		eggs = prof.Profile(ctx.message.mentions[0].id).have_eggs()
+		await bot.say(":egg: | {0} have {1} eggs!".format(ctx.message.mentions[0].name,eggs))
+@bot.command(pass_context=True,description = " generate your profile ! beta0.1 ")
+async def profile(ctx):
+	if len(ctx.message.mentions) == 0:
+		p = prof.Profile(ctx.message.author.id).profiler()
+		await bot.say("Name = *{0}*\nEggs = {1}\n Bio= {2}\n Title = {3}".format(ctx.message.author.name,p[1],p[3],p[4]))
+	else:
+		eggs = prof.Profile(ctx.message.mentions[0].id).profiler()
+				await bot.say("Name = *{0}*\nEggs = {1}\n Bio= {2}\n Title = {3}".format(ctx.message.mentions[0].name,p[1],p[3],p[4]))
+				
+
+
+'''
+
+ Full profile model is ready but dropping for now as cheeze wants [ beta 0.1 ]
+
+'''
 
 
 # bot message event
@@ -62,4 +79,4 @@ async def on_message(message):
 # bot mention event
 
 
-bot.run('')
+bot.run('MzEyNjE3NjkwNzE4MTQyNDY0.C_dsLA.DmaEewiIylnDlVEw1APREx4Ukbs')

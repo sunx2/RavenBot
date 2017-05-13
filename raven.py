@@ -52,4 +52,4 @@ async def on_message(message):
 # bot mention event
 
 
-bot.run('MzEyNjE3NjkwNzE4MTQyNDY0.C_dsLA.DmaEewiIylnDlVEw1APREx4Ukbs')
+bot.run('')

@@ -57,11 +57,24 @@ async def eggs(ctx):
 async def profile(ctx):
 	if len(ctx.message.mentions) == 0:
 		p = prof.Profile(ctx.message.author.id).profiler()
-		await bot.say("Name = *{0}*\nEggs = {1}\n Bio= {2}\n Title = {3}".format(ctx.message.author.name,p[1],p[3],p[4]))
+		em = discord.Embed(title = "{0}'s Profile".format(ctx.message.author.name.title()), description = "Name = {0}\nEggs = {1}\nBio = {2}\nTitle = {3}".format(ctx.message.author.name,p[1],p[3],p[4]))
+		await bot.say(embed = em )
 	else:
-		eggs = prof.Profile(ctx.message.mentions[0].id).profiler()
-				await bot.say("Name = *{0}*\nEggs = {1}\n Bio= {2}\n Title = {3}".format(ctx.message.mentions[0].name,p[1],p[3],p[4]))
-				
+		p = prof.Profile(ctx.message.mentions[0].id).profiler()
+		em = discord.Embed(title = "{0}'s Profile".format(ctx.message.mentions[0].name), description = "Name = {0}\nEggs = {1}\nBio = {2}\nTitle = {3}".format(ctx.message.mentions[0].name,p[1],p[3],p[4]))
+		await bot.say(embed = em )
+
+@bot.command(pass_context=True)
+async def setbio(ctx):
+	msg = ctx.message.content.replace("r.setbio",'')
+	a=prof.Profile(ctx.message.author.id).set_bio(msg)
+	await bot.say(":check: Successfully updated")
+
+@bot.command(pass_context=True)
+async def settitle(ctx):
+	msg = ctx.message.content.replace("r.settitle",'')
+	a=prof.Profile(ctx.message.author.id).set_title(msg)
+	await bot.say(":check: Successfully updated")				
 
 
 '''
@@ -79,4 +92,4 @@ async def on_message(message):
 # bot mention event
 
 
-bot.run('token')
+bot.run('MzEyNjE3NjkwNzE4MTQyNDY0.C_dsLA.DmaEewiIylnDlVEw1APREx4Ukbs')

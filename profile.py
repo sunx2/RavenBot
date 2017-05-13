@@ -52,5 +52,4 @@ class Profile(object):
 		return profile
 		
 
-a=Profile(22383)
-print(a.profiler())
+

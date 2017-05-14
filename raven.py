@@ -10,6 +10,7 @@ import random
 import re
 import requests
 from bs4 import BeautifulSoup
+from google import search
 # scripts import
 import profile as prof
 
@@ -80,15 +81,20 @@ class Stuff:
         await bot.say("{0} {1}".format(random.choice(['Hello',"Hi"]),ctx.message.author.name))
         return
     
-    @commands.command(pass_context=True,description="Search for a video on YouTube ")
+    @commands.command(pass_context=True,description="Search for a video on YouTube.")
     async def youtube(self,ctx):
-        """Search for something on youtube."""
+        """Search for something on YouTube."""
         r = requests.get("https://www.youtube.com/results?search_query={0}".format(ctx.message.content.replace("r.youtube ", "")))
         soup = BeautifulSoup(r.text, "html.parser")
         res = soup.select("a.yt-uix-tile-link")[0]
         link = re.search(r"href\S+", str(res))[0][6:-1]
         await bot.say(":video_camera: | https://www.youtube.com{0}".format(link))
         return
+	
+    @commands.command(pass_context=True,description="Search for a keyword on Google.")
+    async def google(self,ctx):
+	"""Search for something on Google."""
+	
 
 #moderation commands
 
@@ -191,4 +197,4 @@ bot.add_cog(Moderation())
 bot.add_cog(Stuff())
 bot.add_cog(Economy())
 
-bot.run('MzEyNjE3NjkwNzE4MTQyNDY0.C_gNog.284XXYw5bsthlIAKNiTgTHkODJA')
+

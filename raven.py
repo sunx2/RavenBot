@@ -94,7 +94,10 @@ class Stuff:
     @commands.command(pass_context=True,description="Search for a keyword on Google.")
     async def google(self,ctx):
 	"""Search for something on Google."""
-	
+	r = requests.get("http://google.com/search?q={0}".format(ctx.message.content.replace("r.google ", "")))
+	soup = BeautifulSoup(r.text, "html.parser")
+	await bot.say(":mag: | {0}".format(soup.find_all("cite")[0].string))
+	return
 
 #moderation commands
 

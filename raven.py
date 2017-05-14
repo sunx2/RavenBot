@@ -13,7 +13,7 @@ from bs4 import BeautifulSoup
 # scripts import
 import profile as prof
 
-#Lunar, c
+#Lunar, cheeze, Kaoru ids
 owner_ids=["196115225651576832","215139959865081856","270125856679002113"]
 
 #server imports

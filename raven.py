@@ -93,12 +93,19 @@ class Stuff:
 	
     @commands.command(pass_context=True,description="Search for a keyword on Google.")
     async def google(self,ctx):
-	"""Search for something on Google."""
-	r = requests.get("http://google.com/search?q={0}".format(ctx.message.content.replace("r.google ", "")))
-	soup = BeautifulSoup(r.text, "html.parser")
-	await bot.say(":mag: | {0}".format(soup.find_all("cite")[0].string))
-	return
+        """Search for something on Google."""
+        r = requests.get("http://google.com/search?q={0}".format(ctx.message.content.replace("r.google ", "")))
+        soup = BeautifulSoup(r.text, "html.parser")
+        await bot.say(":mag: | {0}".format(soup.find_all("cite")[0].string))
+        return
 
+    @commands.command(pass_context=True)
+    async def gif(self,ctx,*,search_term:str):
+        r=requests.get("http://api.giphy.com/v1/gifs/search?q={}&api_key=dc6zaTOxFJmzC".format(search_term.replace(" ", "+")))
+        data=eval(r.text)
+        url=data["data"][random.randint(0,10)]["url"].replace("\\", "")
+        await bot.say(url)
+        
 #moderation commands
 
 class Moderation:

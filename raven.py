@@ -95,8 +95,8 @@ class Stuff:
     async def google(self,ctx):
         """Search for something on Google."""
         r = requests.get("http://google.com/search?q={0}".format(ctx.message.content.replace("r.google ", "")))
-        soup = BeautifulSoup(r.text, "html.parser")
-        await bot.say(":mag: | {0}".format(soup.find_all("cite")[0].string))
+        soup = str(BeautifulSoup(r.text, "html.parser").find_all("cite")[0])
+        await bot.say(":mag: | {0}".format(re.sub(r"<[^>]*>", "", soup))
         return
 
     @commands.command(pass_context=True)

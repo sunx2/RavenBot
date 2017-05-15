@@ -9,6 +9,7 @@ import os,sys,ast
 import random
 import re
 import requests
+import goslate
 from bs4 import BeautifulSoup
 # scripts import
 import profile as prof
@@ -104,6 +105,15 @@ class Stuff:
         data=eval(r.text)
         url=data["data"][random.randint(0,10)]["url"].replace("\\", "")
         await bot.say(url)
+	return
+	
+    @commands.command(pass_context=True,description="Translate an english word to Japanese.")
+    async def jisho(self,ctx):
+	"""Translate an english word to Japanese."""
+	a = goslate.Goslate()
+	b = ctx.message.content
+	await bot.say(":closed_book: | {0} {1}".format(b.replace("r.jisho ", ""), a.translate(b, "ja")))
+	return
         
 #moderation commands
 

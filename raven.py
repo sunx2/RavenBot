@@ -10,7 +10,6 @@ import random
 import re
 import requests
 from bs4 import BeautifulSoup
-from google import search
 # scripts import
 import profile as prof
 
